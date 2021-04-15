@@ -15,7 +15,7 @@ variables:
   minor: 1
   patch: $[counter(variables['minor'], 0)]
   NugetVersion: $(major).$(minor).$(patch)
-  TagVersion: $(NugetVersion)
+  TagVersion: $(NugetVersion)-tt
 
 steps:
 - task: Bash@3
@@ -29,7 +29,7 @@ steps:
           else
             VERSION=$(NugetVersion)-beta
           fi;
-          $(TagVersion)=$VERSION
+          TagVersion=$VERSION
 
 - task: Bash@3
   displayName: "Adding git"
