@@ -38,8 +38,8 @@ steps:
   inputs:
     targetType: inline
     script: |
-            echo 'TAG ' $(TagVersion)
+            echo 'TAG ' $(TAGVERSION)
             echo 'Source version ' $(Build.SourceVersion)
             echo 'Source BranchName ' $(Build.SourceBranchName)
-            git tag $(TagVersion) $(Build.SourceVersion)
-            git push origin $(TagVersion)
+            git tag $(TAGVERSION) $(Build.SourceVersion)
+            git push origin $(TAGVERSION)
