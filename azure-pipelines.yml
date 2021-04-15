@@ -17,7 +17,7 @@ variables:
   minor: 1
   patch: $[counter(variables['minor'], 0)]
   NugetVersion: $(major).$(minor).$(patch)
-  TagVersion: ""
+  TagVersion: "11111"
 
 steps:
 - task: Bash@3
@@ -38,8 +38,7 @@ steps:
   inputs:
     targetType: inline
     script: |
-            TagVersion=${{ variables.TagVersion }}
-            echo 'TAG ' $[variables.TagVersion]
+            echo 'TAG ' $(TagVersion)
             echo 'Source version ' $(Build.SourceVersion)
             echo 'Source BranchName ' $(Build.SourceBranchName)
             # git tag $TagVersion $(Build.SourceVersion)
