@@ -23,8 +23,8 @@ steps:
   inputs:
     targetType: inline
     script: |
-          echo 'VERSIO ' $VERSION
-          if [ $(Build.SourceBranchName) = "master"]; then
+          echo 'VERSION ' $VERSION
+          if [ $(Build.SourceBranchName) = "master" ]; then
             VERSION=$(NugetVersion)
           else
             VERSION=$(NugetVersion)-beta
