@@ -1,3 +1,4 @@
+
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
@@ -5,16 +6,18 @@
 
 trigger:
 - master
+- feature/*
 
 pool:
   vmImage: ubuntu-latest
+  name: default
 
 variables:
   major: 1
   minor: 1
   patch: $[counter(variables['minor'], 0)]
   NugetVersion: $(major).$(minor).$(patch)
-  TagVersion: $(NugetVersion)
+  TagVersion: $(NugetVersion)-tt
 
 steps:
 - task: Bash@3
@@ -22,18 +25,21 @@ steps:
   inputs:
     targetType: inline
     script: |
-          echo 'VERSIO ' $VERSION
-          if [ $(Build.SourceBranchName) = "master"]; then
+          echo 'VERSION ' $VERSION
+          if [ $(Build.SourceBranchName) = "master" ]; then
             VERSION=$(NugetVersion)
           else
             VERSION=$(NugetVersion)-beta
           fi;
-          $(TagVersion)=$VERSION
+          set $(TagVersion)=$VERSION
 
 - task: Bash@3
   displayName: "Adding git"
   inputs:
     targetType: inline
     script: |
+            echo 'TAG ' $(TagVersion)
+            echo 'Source version ' $(Build.SourceVersion)
+            echo 'Source BranchName ' $(Build.SourceBranchName)
             git tag $(TagVersion) $(Build.SourceVersion)
-            git push $(Build.SourceBranchName) $(TagVersion)
+            git push origin $(TagVersion)
