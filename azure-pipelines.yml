@@ -31,7 +31,7 @@ steps:
           else
             VERSION=$(NugetVersion)-beta
           fi;
-          set $(TagVersion)=$VERSION
+          echo '##vso[task.setVariable variable=TagVersion]$VERSION'
 
 - task: Bash@3
   displayName: "Adding git"
