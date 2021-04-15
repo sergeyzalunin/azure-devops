@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  major: 1
+  minor: 1
+  patch: $[counter(variables['minor'], 0)]
+  NugetVersion: $(major).$(minor).$(patch)
+  TagVersion: $(NugetVersion)
+
+steps:
+- task: Bash@3
+  displayName: "versioning"
+  inputs:
+    targetType: inline
+    script: |
+          echo 'VERSIO ' $VERSION
+          if [ $(Build.SourceBranchName) = "master"]; then
+            VERSION=$(NugetVersion)
+          else
+            VERSION=$(NugetVersion)-beta
+          fi;
+          $(TagVersion)=$VERSION
+
+- task: Bash@3
+  displayName: "Adding git"
+  inputs:
+    targetType: inline
+    script: |
+            git tag $(TagVersion) $(Build.SourceVersion)
+            git push $(Build.SourceBranchName) $(TagVersion)
