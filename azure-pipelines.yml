@@ -41,5 +41,5 @@ steps:
             echo 'TAG ' $(TagVersion)
             echo 'Source version ' $(Build.SourceVersion)
             echo 'Source BranchName ' $(Build.SourceBranchName)
-            # git tag $TagVersion $(Build.SourceVersion)
-            # git push origin $TagVersion
+            git tag $(TagVersion) $(Build.SourceVersion)
+            git push origin $(TagVersion)
