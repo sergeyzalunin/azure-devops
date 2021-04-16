@@ -29,7 +29,7 @@ steps:
           fi;
           echo 'VERSION ' $VERSION
           echo "##vso[build.updatebuildnumber]$VERSION"
-          echo "##vso[task.setvariable variable=TagVersion]"$VERSION
+          echo "##vso[task.setvariable variable=TagVersion]$VERSION"
 
 - task: Bash@3
   displayName: "Adding git"
