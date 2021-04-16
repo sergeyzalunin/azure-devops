@@ -1,4 +1,3 @@
-
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
@@ -6,7 +5,6 @@
 
 trigger:
 - master
-- feature/*
 
 pool:
   vmImage: ubuntu-latest
@@ -17,7 +15,7 @@ variables:
   minor: 1
   patch: $[counter(variables['minor'], 0)]
   NugetVersion: $(major).$(minor).$(patch)
-  TagVersion: $(NugetVersion)-tt
+  TagVersion: "11111"
 
 steps:
 - task: Bash@3
@@ -31,7 +29,7 @@ steps:
           else
             VERSION=$(NugetVersion)-beta
           fi;
-          set $(TagVersion)=$VERSION
+          echo "##vso[task.setvariable variable=TagVersion]"$VERSION
 
 - task: Bash@3
   displayName: "Adding git"
