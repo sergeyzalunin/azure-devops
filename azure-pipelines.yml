@@ -26,18 +26,18 @@ steps:
             VERSION=$(NugetVersion)
           else
             VERSION=$(NugetVersion)-beta
+            echo "##vso[build.updatebuildnumber]$VERSION"
           fi;
           echo 'VERSION ' $VERSION
-          echo "##vso[build.updatebuildnumber]$VERSION"
-          echo "##vso[task.setvariable variable=TagVersion]$VERSION"
+          echo "##vso[task.setvariable variable=Version]$VERSION"
 
 - task: Bash@3
   displayName: "Adding git"
   inputs:
     targetType: inline
     script: |
-            echo 'TAG ' $(TagVersion)
+            echo 'TAG ' $(Version)
             echo 'Source version ' $(Build.SourceVersion)
             echo 'Source BranchName ' $(Build.SourceBranchName)
-            git tag $(TagVersion) $(Build.SourceVersion)
-            git push origin $(TagVersion)
+            git tag $(Version) $(Build.SourceVersion)
+            git push origin $(Version)
