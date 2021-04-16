@@ -15,7 +15,6 @@ variables:
   minor: 1
   patch: $[counter(variables['minor'], 0)]
   NugetVersion: $(major).$(minor).$(patch)
-  TagVersion: "11111"
 
 steps:
 - task: Bash@3
